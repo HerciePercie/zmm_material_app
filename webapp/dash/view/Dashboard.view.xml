@@ -1,0 +1,162 @@
+<mvc:View
+    controllerName="pala.erp.zpaldashapp.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    height="100%">
+
+    <App>
+    <Page id="dashPage" showHeader="false" class="palaDashPage" backgroundDesign="Transparent">
+        <content>
+
+            <FlexBox wrap="Wrap" class="palaDashKpiBar" renderType="Bare">
+                <VBox class="palaDashKpi">
+                    <core:Icon src="sap-icon://sales-order" color="#2f7fe0" size="1.4rem"/>
+                    <Text text="{i18n>kpiOrders}" class="palaDashKpiLabel"/>
+                    <Text text="{dash>/kpi/orderCount}" class="palaDashKpiValue"/>
+                </VBox>
+                <VBox class="palaDashKpi">
+                    <core:Icon src="sap-icon://money-bills" color="#2e7d32" size="1.4rem"/>
+                    <Text text="{i18n>kpiRevenue}" class="palaDashKpiLabel"/>
+                    <HBox alignItems="Baseline">
+                        <Text text="{dash>/kpi/revenue}" class="palaDashKpiValue"/>
+                        <Text text="TL" class="palaDashKpiUnit"/>
+                    </HBox>
+                </VBox>
+                <VBox class="palaDashKpi">
+                    <core:Icon src="sap-icon://inventory" color="#0a2647" size="1.4rem"/>
+                    <Text text="{i18n>kpiStock}" class="palaDashKpiLabel"/>
+                    <HBox alignItems="Baseline">
+                        <Text text="{dash>/kpi/stockValue}" class="palaDashKpiValue"/>
+                        <Text text="TL" class="palaDashKpiUnit"/>
+                    </HBox>
+                </VBox>
+                <VBox class="palaDashKpi">
+                    <core:Icon src="sap-icon://accounting-document-verification" color="#c62828" size="1.4rem"/>
+                    <Text text="{i18n>kpiDebit}" class="palaDashKpiLabel"/>
+                    <HBox alignItems="Baseline">
+                        <Text text="{dash>/kpi/debit}" class="palaDashKpiValue"/>
+                        <Text text="TL" class="palaDashKpiUnit"/>
+                    </HBox>
+                </VBox>
+            </FlexBox>
+
+            <VBox class="palaDashSection">
+                <Text text="{i18n>chartRevenueTitle}" class="palaDashSectionTitle"/>
+                <List items="{dash>/sales}" showSeparators="None">
+                    <CustomListItem>
+                        <VBox class="palaDashBarRow">
+                            <HBox justifyContent="SpaceBetween">
+                                <Text text="{dash>CustomerName}"/>
+                                <Text text="{dash>RevenueFmt} TL"/>
+                            </HBox>
+                            <ProgressIndicator percentValue="{dash>RevenuePct}" showValue="false" state="Information" height="14px"/>
+                        </VBox>
+                    </CustomListItem>
+                </List>
+            </VBox>
+
+            <VBox class="palaDashSection">
+                <Text text="{i18n>chartStockTitle}" class="palaDashSectionTitle"/>
+                <List items="{dash>/stock}" showSeparators="None">
+                    <CustomListItem>
+                        <VBox class="palaDashBarRow">
+                            <HBox justifyContent="SpaceBetween">
+                                <Text text="{dash>MatDesc}"/>
+                                <Text text="{dash>StockValueFmt} TL"/>
+                            </HBox>
+                            <ProgressIndicator percentValue="{dash>StockValuePct}" showValue="false" state="Success" height="14px"/>
+                        </VBox>
+                    </CustomListItem>
+                </List>
+            </VBox>
+
+            <VBox class="palaDashSection">
+                <Text text="{i18n>secSd}" class="palaDashSectionTitle"/>
+                <Table items="{dash>/sd}" alternateRowColors="true">
+                    <columns>
+                        <Column><Text text="{i18n>colStatus}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colCount}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colAmount}"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{dash>OrderStatusText}"/>
+                                <Text text="{dash>OrderCount}"/>
+                                <Text text="{dash>TotalAmountFmt} TL"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
+            <VBox class="palaDashSection">
+                <Text text="{i18n>secSales}" class="palaDashSectionTitle"/>
+                <Table items="{dash>/sales}" alternateRowColors="true">
+                    <columns>
+                        <Column><Text text="{i18n>colCustomer}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colOrders}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colRevenue}"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{dash>CustomerName}"/>
+                                <Text text="{dash>OrderCount}"/>
+                                <Text text="{dash>RevenueFmt} TL"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
+            <VBox class="palaDashSection">
+                <Text text="{i18n>secStock}" class="palaDashSectionTitle"/>
+                <Table items="{dash>/stock}" alternateRowColors="true">
+                    <columns>
+                        <Column><Text text="{i18n>colMat}"/></Column>
+                        <Column><Text text="{i18n>colMatType}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colQty}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colUnitPrice}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colStockValue}"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{dash>MatDesc}"/>
+                                <Text text="{dash>MatType}"/>
+                                <Text text="{dash>StockQtyFmt}"/>
+                                <Text text="{dash>UnitPriceFmt} TL"/>
+                                <Text text="{dash>StockValueFmt} TL"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
+            <VBox class="palaDashSection">
+                <Text text="{i18n>secFin}" class="palaDashSectionTitle"/>
+                <Table items="{dash>/fin}" alternateRowColors="true">
+                    <columns>
+                        <Column><Text text="{i18n>colDocType}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colJeCount}"/></Column>
+                        <Column hAlign="End"><Text text="{i18n>colDebit}"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{dash>DocType}"/>
+                                <Text text="{dash>JeCount}"/>
+                                <Text text="{dash>TotalDebitFmt} TL"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
+        </content>
+    </Page>
+    </App>
+</mvc:View>

@@ -1,0 +1,136 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "pala.erp.zpalbomapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zpal_ui_bom_o4_bind/srvd/sap/zpal_ui_bom_o4/0001/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.148.7",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "pala.erp.zpalbomapp.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "BillOfMaterialList",
+          "target": "BillOfMaterialList"
+        },
+        {
+          "pattern": "BillOfMaterial({key}):?query:",
+          "name": "BillOfMaterialObjectPage",
+          "target": "BillOfMaterialObjectPage"
+        },
+        {
+          "pattern": "BillOfMaterial({key})/_Items({key2}):?query:",
+          "name": "BillOfMaterialItemObjectPage",
+          "target": "BillOfMaterialItemObjectPage"
+        }
+      ],
+      "targets": {
+        "BillOfMaterialList": {
+          "type": "Component",
+          "id": "BillOfMaterialList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/BillOfMaterial",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "BillOfMaterial": {
+                  "detail": {
+                    "route": "BillOfMaterialObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BillOfMaterialObjectPage": {
+          "type": "Component",
+          "id": "BillOfMaterialObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/BillOfMaterial",
+              "navigation": {
+                "_Items": {
+                  "detail": {
+                    "route": "BillOfMaterialItemObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BillOfMaterialItemObjectPage": {
+          "type": "Component",
+          "id": "BillOfMaterialItemObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/BillOfMaterial/_Items"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

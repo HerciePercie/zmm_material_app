@@ -1,0 +1,52 @@
+<mvc:View
+    controllerName="pala.erp.zmmmaterialapp.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <Page id="homePage" title="Pala Giyim A.Ş. - Kurumsal ERP Portalı" showHeader="true">
+        <headerContent>
+            <Button id="btnUser" icon="sap-icon://customer" text="Sistem Yöneticisi" type="Transparent" />
+        </headerContent>
+        <content>
+            <VBox id="vboxMain" class="sapUiMediumMargin">
+                <Title id="titleModules" text="ERP Modülleri" level="H2" class="sapUiSmallMarginBottom" />
+                
+                <GenericTile id="tileMM" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="MM Modülü" subheader="Malzeme ve Stok Yönetimi" press="onNavToMM">
+                    <TileContent id="tcMM">
+                        <ImageContent id="icMM" src="sap-icon://inventory" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile id="tileFI" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="FI Modülü" subheader="Finansal Muhasebe" press="onDisabledModule">
+                    <TileContent id="tcFI">
+                        <ImageContent id="icFI" src="sap-icon://money-bills" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile id="tileCO" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="CO Modülü" subheader="Maliyet Muhasebesi" press="onDisabledModule">
+                    <TileContent id="tcCO">
+                        <ImageContent id="icCO" src="sap-icon://lead" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile id="tileSD" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="SD Modülü" subheader="Satış ve Dağıtım" press="onDisabledModule">
+                    <TileContent id="tcSD">
+                        <ImageContent id="icSD" src="sap-icon://sales-order" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile id="tileHR" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="HCM / HR" subheader="İnsan Kaynakları" press="onDisabledModule">
+                    <TileContent id="tcHR">
+                        <ImageContent id="icHR" src="sap-icon://group" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile id="tileABAP" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="ABAP Workbench" subheader="Geliştirici &amp; Sistem Araçları" press="onDisabledModule">
+                    <TileContent id="tcABAP">
+                        <ImageContent id="icABAP" src="sap-icon://developer-settings" />
+                    </TileContent>
+                </GenericTile>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

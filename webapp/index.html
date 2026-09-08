@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pala Giyim A.Ş. - Kurumsal ERP Portalı</title>
+
+    <script id="sap-ui-bootstrap"
+        src="resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-libs="sap.m, sap.f, sap.ui.core, sap.tnt"
+        data-sap-ui-resourceroots='{
+            "pala.erp.zmmmaterialapp": "./",
+            "pala.erp.zsdsalesorderapp": "./sd/",
+            "pala.erp.zpalcustomerapp": "./customer/",
+            "pala.erp.zpalvendorapp": "./vendor/",
+            "pala.erp.zpalpoapp": "./po/",
+            "pala.erp.zpalglapp": "./gl/",
+            "pala.erp.zpaljeapp": "./je/",
+            "pala.erp.zpalbomapp": "./bom/",
+            "pala.erp.zpalprodapp": "./prod/",
+            "pala.erp.zpalempapp": "./emp/",
+            "pala.erp.zpaldashapp": "./dash/"
+        }'
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true">
+    </script>
+
+    <style>
+        :root {
+            --bg-top:      #eaf4fc;
+            --bg-bottom:   #d9e9f8;
+            --navy-1:      #0a2647;
+            --navy-2:      #123b6d;
+            --navy-3:      #1e56a0;
+            --accent:      #2f7fe0;
+            --accent-soft: rgba(47, 127, 224, 0.14);
+            --ink:         #0f2438;
+            --muted:       #64748b;
+            --card:        #ffffff;
+            --line:        rgba(15, 36, 56, 0.09);
+        }
+
+        html, body {
+            height: 100% !important;
+            margin: 0 !important;
+        }
+
+        .homeBg {
+            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%) !important;
+        }
+        .homeBg * {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+
+        html body.sapUiBody,
+        html body#content.sapUiBody {
+            background: var(--bg-top) !important;
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .topBar {
+            background: linear-gradient(90deg, var(--navy-1) 0%, var(--navy-3) 100%) !important;
+            box-shadow: 0 4px 16px rgba(10, 38, 71, 0.28) !important;
+        }
+        .topBar, .topBar * {
+            color: #ffffff !important;
+        }
+
+        .portalShell {
+            box-sizing: border-box !important;
+            max-width: 1240px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            padding: 0 1.75rem 4rem 1.75rem !important;
+        }
+
+        .heroCard {
+            display: block !important;
+            box-sizing: border-box !important;
+            background: linear-gradient(135deg, var(--navy-1) 0%, var(--navy-3) 100%) !important;
+            border-radius: 22px !important;
+            box-shadow: 0 24px 48px -16px rgba(10, 38, 71, 0.45) !important;
+            margin: 2rem 0 0 0 !important;
+            padding: 2rem 2.25rem !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .heroCard::before {
+            content: "";
+            position: absolute;
+            top: -70px;
+            right: -70px;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.07);
+            pointer-events: none;
+        }
+        .heroCard::after {
+            content: "";
+            position: absolute;
+            bottom: -90px;
+            left: 30%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            pointer-events: none;
+        }
+        .heroCard, .heroCard * {
+            color: #ffffff !important;
+        }
+        .heroCard * {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+        .heroInner {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            flex-wrap: wrap !important;
+            gap: 1rem !important;
+            position: relative;
+            z-index: 1;
+        }
+        .heroTitle {
+            font-weight: 700 !important;
+            font-size: 1.6rem !important;
+            margin: 0 0 0.4rem 0 !important;
+            display: block !important;
+        }
+        .heroSubtitle {
+            opacity: 0.78 !important;
+            max-width: 520px;
+            line-height: 1.6 !important;
+            font-size: 0.93rem !important;
+            display: block !important;
+        }
+        .heroBadge {
+            background: rgba(255,255,255,0.14) !important;
+            border: 1px solid rgba(255,255,255,0.28) !important;
+            border-radius: 999px !important;
+            padding: 0.4rem 1.1rem !important;
+            font-weight: 600 !important;
+            white-space: nowrap;
+        }
+
+        .sectionHead {
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.7rem !important;
+            margin: 2.75rem 0 1.1rem 0 !important;
+        }
+        .sectionHead::before {
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 22px;
+            border-radius: 3px;
+            background: var(--accent) !important;
+            flex-shrink: 0;
+        }
+        .sectionTitle {
+            font-weight: 700 !important;
+            color: var(--ink) !important;
+            font-size: 1.08rem !important;
+            margin: 0 !important;
+        }
+        .sectionCount {
+            color: var(--muted) !important;
+            font-size: 0.76rem !important;
+            letter-spacing: 0.03em;
+        }
+
+        .tileGrid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)) !important;
+            gap: 0.55rem !important;
+            width: 100% !important;
+        }
+        .tileGrid > * {
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+        }
+
+        .moduleTile {
+            border-radius: 18px !important;
+            border: 1px solid var(--line) !important;
+            box-shadow: 0 4px 14px rgba(15,36,56,0.06) !important;
+            background: var(--card) !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .moduleTile::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: #d7dfe9;
+            pointer-events: none;
+        }
+        .moduleTile:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 32px -12px rgba(15,36,56,0.22) !important;
+        }
+        .tileActive {
+            border-color: var(--accent) !important;
+        }
+        .tileActive::after {
+            background: var(--accent) !important;
+        }
+        .tileActive::before {
+            content: "AKTİF";
+            position: absolute;
+            top: 13px;
+            right: 14px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #ffffff;
+            background: var(--accent);
+            padding: 3px 9px;
+            border-radius: 999px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .tileInactive {
+            opacity: 0.8 !important;
+        }
+        .tileInactive::before {
+            content: "YOL HARİTASINDA";
+            position: absolute;
+            top: 13px;
+            right: 14px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            background: #eef1f6;
+            padding: 3px 9px;
+            border-radius: 999px;
+            z-index: 2;
+            pointer-events: none;
+        }
+    </style>
+
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ui.require([
+                "sap/m/MessageBox"
+            ], function (MessageBox) {
+
+                var oApp = new sap.m.App("palaErpApp");
+                var mLoaded = {};
+
+                var MODULES = {
+                    MM: {
+                        pageId: "materialAppPage",
+                        component: "pala.erp.zmmmaterialapp",
+                        title: "Pala Giyim A.Ş. - MM Malzeme & Stok Yönetimi"
+                    },
+                    SD: {
+                        pageId: "salesOrderAppPage",
+                        component: "pala.erp.zsdsalesorderapp",
+                        title: "Pala Giyim A.Ş. - SD Satış ve Dağıtım"
+                    },
+                    CUSTOMER: {
+                        pageId: "customerAppPage",
+                        component: "pala.erp.zpalcustomerapp",
+                        title: "Pala Giyim A.Ş. - Müşteri Ana Verisi"
+                    },
+                    VENDOR: {
+                        pageId: "vendorAppPage",
+                        component: "pala.erp.zpalvendorapp",
+                        title: "Pala Giyim A.Ş. - Tedarikçi Ana Verisi"
+                    },
+                    PO: {
+                        pageId: "poAppPage",
+                        component: "pala.erp.zpalpoapp",
+                        title: "Pala Giyim A.Ş. - Satın Alma Siparişi"
+                    },
+                    GL: {
+                        pageId: "glAppPage",
+                        component: "pala.erp.zpalglapp",
+                        title: "Pala Giyim A.Ş. - Hesap Planı"
+                    },
+                    JE: {
+                        pageId: "jeAppPage",
+                        component: "pala.erp.zpaljeapp",
+                        title: "Pala Giyim A.Ş. - Muhasebe Fişi"
+                    },
+                    BOM: {
+                        pageId: "bomAppPage",
+                        component: "pala.erp.zpalbomapp",
+                        title: "Pala Giyim A.Ş. - Ürün Reçetesi"
+                    },
+                    PROD: {
+                        pageId: "prodAppPage",
+                        component: "pala.erp.zpalprodapp",
+                        title: "Pala Giyim A.Ş. - Üretim Emri"
+                    },
+                    EMP: {
+                        pageId: "empAppPage",
+                        component: "pala.erp.zpalempapp",
+                        title: "Pala Giyim A.Ş. - Personel"
+                    },
+                    DASH: {
+                        pageId: "dashAppPage",
+                        component: "pala.erp.zpaldashapp",
+                        title: "Pala Giyim A.Ş. - Analitik Dashboard"
+                    }
+                };
+
+                function openModule(sKey) {
+                    var oCfg = MODULES[sKey];
+                    if (!oCfg) {
+                        MessageBox.information(sKey + " modülü geliştirme yol haritasındadır.");
+                        return;
+                    }
+
+                    window.location.hash = "";
+
+                    if (!mLoaded[sKey]) {
+                        var oContainer = new sap.ui.core.ComponentContainer(sKey + "ComponentContainer", {
+                            name: oCfg.component,
+                            manifest: true,
+                            async: true,
+                            height: "100%",
+                            width: "100%"
+                        });
+
+                        var oPage = new sap.m.Page(oCfg.pageId, {
+                            showHeader: true,
+                            customHeader: new sap.m.Bar({
+                                contentLeft: [
+                                    new sap.m.Button({
+                                        icon: "sap-icon://nav-back",
+                                        text: "Menüye Dön",
+                                        type: "Emphasized",
+                                        press: function () {
+                                            window.location.hash = "";
+                                            oApp.to("homePage", "show");
+                                        }
+                                    })
+                                ],
+                                contentMiddle: [
+                                    new sap.m.Title({ text: oCfg.title, level: "H3" })
+                                ],
+                                contentRight: [
+                                    new sap.m.ObjectStatus({ text: "SAP BTP Canlı Sistem", state: "Success" })
+                                ]
+                            }),
+                            content: [oContainer]
+                        });
+
+                        oApp.addPage(oPage);
+                        mLoaded[sKey] = true;
+                    }
+
+                    oApp.to(oCfg.pageId, "slide");
+                }
+
+                function makeModuleTile(sHeader, sSubheader, sIcon, isActive, sModuleName) {
+                    var oTile = new sap.m.GenericTile({
+                        header: sHeader,
+                        subheader: sSubheader,
+                        tileContent: [
+                            new sap.m.TileContent({
+                                footer: isActive ? "Canlı kullanımda" : "Yol haritasında",
+                                content: new sap.m.ImageContent({ src: sIcon })
+                            })
+                        ],
+                        press: function () { openModule(sModuleName); }
+                    });
+                    oTile.addStyleClass("moduleTile");
+                    oTile.addStyleClass(isActive ? "tileActive" : "tileInactive");
+                    return oTile;
+                }
+
+                function makeSectionHeader(sTitle, sCount) {
+                    var oTitle = new sap.m.Title({ text: sTitle, level: "H3" });
+                    oTitle.addStyleClass("sectionTitle");
+
+                    var oCountText = new sap.m.Text({ text: sCount });
+                    oCountText.addStyleClass("sectionCount");
+
+                    var oBox = new sap.m.HBox({
+                        alignItems: "Baseline",
+                        items: [ oTitle, oCountText ]
+                    });
+                    oBox.addStyleClass("sectionHead");
+                    return oBox;
+                }
+
+                var oHeroTitle = new sap.m.Title({ text: "Hoş geldiniz, Sistem Yöneticisi", level: "H2" });
+                oHeroTitle.addStyleClass("heroTitle");
+
+                var oHeroSubtitle = new sap.m.Text({ text: "Pala Giyim A.Ş. entegre ERP altyapısı ve modül erişim paneli." });
+                oHeroSubtitle.addStyleClass("heroSubtitle");
+
+                var oHeroBadge = new sap.m.ObjectStatus({ text: "SAP BTP Canlı Sistem", state: "Success" });
+                oHeroBadge.addStyleClass("heroBadge");
+
+                var oHeroInner = new sap.m.FlexBox({
+                    alignItems: "Center",
+                    justifyContent: "SpaceBetween",
+                    items: [
+                        new sap.m.VBox({ items: [ oHeroTitle, oHeroSubtitle ] }),
+                        oHeroBadge
+                    ]
+                });
+                oHeroInner.addStyleClass("heroInner");
+
+                var oHeroPanel = new sap.m.Panel({
+                    content: [ oHeroInner ]
+                });
+                oHeroPanel.addStyleClass("heroCard");
+
+                var oTileGrid1 = new sap.m.FlexBox({
+                    items: [
+                        makeModuleTile("Müşteri Ana Verisi", "Müşteri Kayıtları & Adres Bilgileri", "sap-icon://customer", true, "CUSTOMER"),
+                        makeModuleTile("Tedarikçi Ana Verisi", "Tedarikçi Kayıtları & Adres Bilgileri", "sap-icon://supplier", true, "VENDOR"),
+                        makeModuleTile("Hesap Planı", "Genel Muhasebe Hesapları", "sap-icon://account", true, "GL")
+                    ]
+                });
+                oTileGrid1.addStyleClass("tileGrid");
+
+                var oTileGrid2 = new sap.m.FlexBox({
+                    items: [
+                        makeModuleTile("MM · Malzeme Yönetimi", "Malzeme Ana Verileri & Stok Takibi", "sap-icon://inventory", true, "MM"),
+                        makeModuleTile("SD · Satış ve Dağıtım", "Sipariş, Teslimat & Faturalama", "sap-icon://sales-order", true, "SD"),
+                        makeModuleTile("Satın Alma", "Tedarikçi Siparişi & Mal Kabul", "sap-icon://cart", true, "PO")
+                    ]
+                });
+                oTileGrid2.addStyleClass("tileGrid");
+
+                var oTileGrid3 = new sap.m.FlexBox({
+                    items: [
+                        makeModuleTile("Ürün Reçetesi (BOM)", "Mamul Bileşen Yapısı", "sap-icon://product", true, "BOM"),
+                        makeModuleTile("Üretim Emri", "BOM Patlatma & Sarf/Giriş", "sap-icon://factory", true, "PROD")
+                    ]
+                });
+                oTileGrid3.addStyleClass("tileGrid");
+
+                var oTileGrid4 = new sap.m.FlexBox({
+                    items: [
+                        makeModuleTile("FI · Muhasebe Fişi", "Yevmiye Kayıtları (Borç/Alacak)", "sap-icon://accounting-document-verification", true, "JE"),
+                        makeModuleTile("HCM · Personel", "Personel & Departman Yönetimi", "sap-icon://employee", true, "EMP"),
+                        makeModuleTile("CO · Maliyet Muhasebesi", "Masraf Yerleri, Ürün Maliyeti", "sap-icon://lead", false, "CO")
+                    ]
+                });
+                oTileGrid4.addStyleClass("tileGrid");
+
+                var oTileGrid5 = new sap.m.FlexBox({
+                    items: [
+                        makeModuleTile("Analitik Dashboard", "KPI'lar, Ciro / Stok / Muhasebe Grafikleri", "sap-icon://business-objects-experience", true, "DASH")
+                    ]
+                });
+                oTileGrid5.addStyleClass("tileGrid");
+
+                var oPortalShell = new sap.m.VBox({
+                    items: [
+                        oHeroPanel,
+                        makeSectionHeader("Ana Veriler", "3 modül"),
+                        oTileGrid1,
+                        makeSectionHeader("Lojistik & Tedarik Zinciri", "3 modül"),
+                        oTileGrid2,
+                        makeSectionHeader("Üretim", "2 modül"),
+                        oTileGrid3,
+                        makeSectionHeader("Finans & Yönetim & İK", "3 modül"),
+                        oTileGrid4,
+                        makeSectionHeader("Analitik", "1 modül"),
+                        oTileGrid5
+                    ]
+                });
+                oPortalShell.addStyleClass("portalShell");
+
+                var oShellBar = new sap.f.ShellBar({
+                    title: "Pala Giyim ERP",
+                    secondTitle: "Kurumsal Kaynak Planlama Portalı",
+                    homeIcon: "sap-icon://building",
+                    profile: new sap.f.Avatar({ initials: "PG", displayShape: "Circle" })
+                });
+                oShellBar.addStyleClass("topBar");
+
+                var oHomePage = new sap.m.Page("homePage", {
+                    showHeader: false,
+                    content: [
+                        oShellBar,
+                        oPortalShell
+                    ]
+                });
+                oHomePage.addStyleClass("homeBg");
+
+                oApp.addPage(oHomePage);
+                oApp.placeAt("content");
+            });
+        });
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+</body>
+</html>

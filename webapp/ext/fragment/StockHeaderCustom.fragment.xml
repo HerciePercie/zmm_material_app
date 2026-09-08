@@ -1,0 +1,37 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Panel id="pnlMaterialForm" headerText="Pala Giyim - Yeni Malzeme Kayıt Formu" class="sapUiResponsiveMargin" expandable="false">
+        <f:SimpleForm id="formMaterialEntry" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12">
+            <f:content>
+                <Label id="lblMatId" text="Malzeme Kodu" required="true" />
+                <Input id="inpMatId" placeholder="Örn: MAT-1001" maxLength="20" />
+
+                <Label id="lblMatName" text="Malzeme Açıklaması" required="true" />
+                <Input id="inpMatName" placeholder="Örn: Slim Fit Pamuk Gömlek" />
+
+                <Label id="lblMatType" text="Malzeme Tipi" />
+                <Select id="selMatType">
+                    <core:Item id="itemRaw" key="HAMMADDE" text="Hammadde (Kumaş/İplik)" />
+                    <core:Item id="itemProd" key="MAMUL" text="Mamul (Hazır Giyim)" />
+                    <core:Item id="itemTrade" key="TICARI" text="Ticari Malzeme" />
+                </Select>
+
+                <Label id="lblUnit" text="Ölçü Birimi" />
+                <Input id="inpUnit" value="ST" placeholder="ST, ADET, MT" />
+
+                <Label id="lblPrice" text="Birim Fiyat (TL)" required="true" />
+                <Input id="inpPrice" type="Number" placeholder="0.00" />
+
+                <Label id="lblStock" text="Başlangıç Stoğu" />
+                <Input id="inpStock" type="Number" placeholder="0" />
+
+                <Label id="lblDummy" text="" />
+                <Button id="btnSaveMaterial" text="Veritabanına Kaydet" type="Emphasized" icon="sap-icon://save" press="onSaveMaterial" />
+            </f:content>
+        </f:SimpleForm>
+    </Panel>
+
+</core:FragmentDefinition>

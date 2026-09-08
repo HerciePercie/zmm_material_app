@@ -1,0 +1,136 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "pala.erp.zpaljeapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zpal_ui_je_o4_bind/srvd/sap/zpal_ui_je_o4/0001/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.148.7",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "pala.erp.zpaljeapp.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "JournalEntryList",
+          "target": "JournalEntryList"
+        },
+        {
+          "pattern": "JournalEntry({key}):?query:",
+          "name": "JournalEntryObjectPage",
+          "target": "JournalEntryObjectPage"
+        },
+        {
+          "pattern": "JournalEntry({key})/_Items({key2}):?query:",
+          "name": "JournalEntryItemObjectPage",
+          "target": "JournalEntryItemObjectPage"
+        }
+      ],
+      "targets": {
+        "JournalEntryList": {
+          "type": "Component",
+          "id": "JournalEntryList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/JournalEntry",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "JournalEntry": {
+                  "detail": {
+                    "route": "JournalEntryObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "JournalEntryObjectPage": {
+          "type": "Component",
+          "id": "JournalEntryObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/JournalEntry",
+              "navigation": {
+                "_Items": {
+                  "detail": {
+                    "route": "JournalEntryItemObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "JournalEntryItemObjectPage": {
+          "type": "Component",
+          "id": "JournalEntryItemObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/JournalEntry/_Items"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}
