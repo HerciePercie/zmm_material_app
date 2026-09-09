@@ -1,0 +1,7 @@
+@EndUserText.label: 'Dashboard OData V4 Servisi'
+define service ZPAL_UI_DASH_O4 {
+  expose ZPAL_I_DASH_SD    as DashSd;
+  expose ZPAL_I_DASH_SALES as DashSales;
+  expose ZPAL_I_DASH_STOCK as DashStock;
+  expose ZPAL_I_DASH_FIN   as DashFin;
+}

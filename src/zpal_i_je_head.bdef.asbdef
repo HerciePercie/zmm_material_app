@@ -1,0 +1,74 @@
+managed implementation in class zpal_bp_je_head unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZPAL_I_JE_HEAD alias JournalEntry
+persistent table zpal_je_head
+draft table zpal_je_head_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  association _Items { create; with draft; }
+
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt, TotalDebit, TotalCredit;
+  field ( mandatory : create ) JeId, HeaderText;
+
+  static action postAuto parameter ZD_PAL_JE_AUTO_PARAM;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpal_je_head
+  {
+    JeId               = je_id;
+    PostingDate        = posting_date;
+    DocType            = doc_type;
+    Reference          = reference;
+    HeaderText         = header_text;
+    TotalDebit         = total_debit;
+    TotalCredit        = total_credit;
+    CurrencyCode       = currency_code;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
+
+define behavior for ZPAL_I_JE_ITEM alias JournalEntryItem
+persistent table zpal_je_item
+draft table zpal_je_item_d
+lock dependent by _Header
+authorization dependent by _Header
+{
+  update;
+  delete;
+
+  field ( readonly ) JeId;
+
+  association _Header;
+
+  determination calculateTotals on save { create; update; }
+  validation    validateBalance on save { create; update; }
+
+  mapping for zpal_je_item
+  {
+    JeId         = je_id;
+    ItemPos      = item_pos;
+    GlAccount    = gl_account;
+    DebitCredit  = debit_credit;
+    Amount       = amount;
+    CostCenter   = cost_center;
+    ItemText     = item_text;
+    CurrencyCode = currency_code;
+  }
+}

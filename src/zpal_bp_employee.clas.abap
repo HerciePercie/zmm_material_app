@@ -1,0 +1,7 @@
+CLASS zpal_bp_employee DEFINITION
+  PUBLIC ABSTRACT FINAL
+  FOR BEHAVIOR OF zpal_i_employee.
+ENDCLASS.
+
+CLASS zpal_bp_employee IMPLEMENTATION.
+ENDCLASS.

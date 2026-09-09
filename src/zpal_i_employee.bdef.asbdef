@@ -1,0 +1,44 @@
+managed implementation in class zpal_bp_employee unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZPAL_I_EMPLOYEE alias Employee
+persistent table zpal_employee
+draft table zpal_employee_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) FullName, CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt;
+  field ( mandatory : create ) EmpId, FirstName, LastName;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpal_employee
+  {
+    EmpId              = emp_id;
+    FirstName          = first_name;
+    LastName           = last_name;
+    DepartmentId       = department_id;
+    Positionn           = positionn;
+    HireDate           = hire_date;
+    Email              = email;
+    Phone              = phone;
+    MonthlySalary      = monthly_salary;
+    CurrencyCode       = currency_code;
+    EmpStatus          = emp_status;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

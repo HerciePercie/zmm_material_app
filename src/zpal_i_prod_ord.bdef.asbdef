@@ -1,0 +1,44 @@
+managed implementation in class zpal_bp_prod_ord unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZPAL_I_PROD_ORD alias ProductionOrder
+persistent table zpal_prod_ord
+draft table zpal_prod_ord_d
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt;
+  field ( mandatory : create ) ProdId, ProductMat, OrderQty;
+
+  action confirmProduction result [1] $self;
+  action cancelProduction  result [1] $self;
+
+  validation validateComponents on save { field ProdStatus; }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpal_prod_ord
+  {
+    ProdId             = prod_id;
+    ProductMat         = product_mat;
+    OrderQty           = order_qty;
+    OrderUnit          = order_unit;
+    ProdStatus         = prod_status;
+    HeaderText         = header_text;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

@@ -1,0 +1,21 @@
+projection;
+strict ( 2 );
+
+define behavior for ZC_MM_MATERIAL alias Material
+{
+  use create;
+  use update;
+  use delete;
+
+  use action addStock;
+
+  use association _StockMovements { create; }
+}
+
+define behavior for ZC_MM_STOCK_MOV alias StockMovement
+{
+  use update;
+  use delete;
+
+  use association _Material;
+}

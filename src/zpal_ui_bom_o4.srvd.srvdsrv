@@ -1,0 +1,5 @@
+@EndUserText.label: 'Urun Recetesi OData V4 Servisi'
+define service ZPAL_UI_BOM_O4 {
+  expose ZPAL_C_BOM_HEAD as BillOfMaterial;
+  expose ZPAL_C_BOM_ITEM as BillOfMaterialItem;
+}

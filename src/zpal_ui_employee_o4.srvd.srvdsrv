@@ -1,0 +1,4 @@
+@EndUserText.label: 'Personel Ana Verisi OData V4 Servisi'
+define service ZPAL_UI_EMPLOYEE_O4 {
+  expose ZPAL_C_EMPLOYEE as Employee;
+}

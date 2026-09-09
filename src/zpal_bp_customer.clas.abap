@@ -1,0 +1,7 @@
+CLASS zpal_bp_customer DEFINITION
+  PUBLIC ABSTRACT FINAL
+  FOR BEHAVIOR OF zpal_i_customer.
+ENDCLASS.
+
+CLASS zpal_bp_customer IMPLEMENTATION.
+ENDCLASS.

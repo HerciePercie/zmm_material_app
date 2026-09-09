@@ -1,0 +1,5 @@
+@EndUserText.label: 'SD Satis Siparis OData Servis Tanimi'
+define service ZSD_SD_SO {
+  expose ZC_SD_SO_HEAD as SalesOrder;
+  expose ZC_SD_SO_ITEM as OrderItem;
+}

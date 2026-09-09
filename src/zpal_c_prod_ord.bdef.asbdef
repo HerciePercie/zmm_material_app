@@ -1,0 +1,19 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZPAL_C_PROD_ORD alias ProductionOrder
+{
+  use create;
+  use update;
+  use delete;
+
+  use action confirmProduction;
+  use action cancelProduction;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}

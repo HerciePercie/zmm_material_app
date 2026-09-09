@@ -1,0 +1,4 @@
+@EndUserText.label: 'Uretim Emri OData V4 Servisi'
+define service ZPAL_UI_PROD_O4 {
+  expose ZPAL_C_PROD_ORD as ProductionOrder;
+}

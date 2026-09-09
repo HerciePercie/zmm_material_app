@@ -1,0 +1,5 @@
+@EndUserText.label: 'Muhasebe Fisi OData V4 Servisi'
+define service ZPAL_UI_JE_O4 {
+  expose ZPAL_C_JE_HEAD as JournalEntry;
+  expose ZPAL_C_JE_ITEM as JournalEntryItem;
+}

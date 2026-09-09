@@ -1,0 +1,81 @@
+managed implementation in class zpal_bp_po_head unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZPAL_I_PO_HEAD alias PurchaseOrder
+persistent table zpal_po_head
+draft table zpal_po_head_d
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  association _Items { create; with draft; }
+  association _Vendor;
+
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt, TotalAmount;
+  field ( mandatory : create ) VendorId;
+
+  action approvePO result [1] $self;
+  action receiveGoods result [1] $self;
+  action cancelPO result [1] $self;
+
+  determination calculateTotalAmount on save { create; }
+
+  validation validatePOApproval on save { field PoStatus; }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpal_po_head
+  {
+    PoId               = po_id;
+    VendorId           = vendor_id;
+    VendorName         = vendor_name;
+    OrderDate          = order_date;
+    TotalAmount        = total_amount;
+    CurrencyCode       = currency_code;
+    PoStatus           = po_status;
+    DeliveryNote       = delivery_note;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
+
+define behavior for ZPAL_I_PO_ITEM alias PurchaseOrderItem
+persistent table zpal_po_item
+draft table zpal_po_item_d
+lock dependent by _Header
+authorization dependent by _Header
+{
+  update;
+  delete;
+
+  field ( readonly ) PoId, NetAmount;
+
+  association _Header;
+  association _Material;
+
+  determination calculateNetAmount on modify { create; field Quantity, UnitPrice; }
+
+  mapping for zpal_po_item
+  {
+    PoId         = po_id;
+    ItemPos      = item_pos;
+    MatId        = mat_id;
+    Quantity     = quantity;
+    Unit         = unit;
+    UnitPrice    = unit_price;
+    NetAmount    = net_amount;
+    CurrencyCode = currency_code;
+  }
+}

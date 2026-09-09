@@ -1,0 +1,54 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    typeName: 'Malzeme',
+    typeNamePlural: 'Malzemeler',
+    title: { type: #STANDARD, value: 'MatDesc' },
+    description: { value: 'MatId' }
+}
+annotate view ZC_MM_MATERIAL with
+{
+  @UI.facet: [
+    { id: 'GeneralData', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'Genel Malzeme Bilgileri', position: 10 },
+    { id: 'PriceStock',  purpose: #STANDARD, type: #FIELDGROUP_REFERENCE,     label: 'Stok ve Maliyet',        position: 20, targetQualifier: 'FG_Stock' },
+    { id: 'StockMov',    purpose: #STANDARD, type: #LINEITEM_REFERENCE,       label: 'Stok Hareket Geçmişi',   position: 30, targetElement: '_StockMovements' }
+  ]
+
+  @UI.lineItem: [
+    { position: 10, label: 'Malzeme Kodu' },
+    { type: #FOR_ACTION, dataAction: 'addStock', label: 'Stok Girişi Yap', position: 10 }
+  ]
+  @UI.identification: [ { position: 10, label: 'Malzeme Kodu' } ]
+  @UI.selectionField: [ { position: 10 } ]
+  MatId;
+
+  @UI.lineItem: [ { position: 20, label: 'Malzeme Açıklaması' } ]
+  @UI.identification: [ { position: 20, label: 'Malzeme Açıklaması' } ]
+  @UI.selectionField: [ { position: 20 } ]
+  MatDesc;
+
+  @UI.lineItem: [ { position: 30, label: 'Malzeme Tipi' } ]
+  @UI.identification: [ { position: 30, label: 'Malzeme Tipi' } ]
+  @UI.selectionField: [ { position: 30 } ]
+  MatType;
+
+  @UI.lineItem: [ { position: 40, label: 'Ölçü Birimi' } ]
+  @UI.identification: [ { position: 40, label: 'Ölçü Birimi' } ]
+  BaseUnit;
+
+  @UI.lineItem: [ { position: 50, label: 'Mevcut Stok' } ]
+  @UI.fieldGroup: [ { qualifier: 'FG_Stock', position: 10, label: 'Mevcut Stok Miktarı' } ]
+  StockQty;
+
+  @UI.lineItem: [ { position: 60, label: 'Birim Fiyat' } ]
+  @UI.fieldGroup: [ { qualifier: 'FG_Stock', position: 20, label: 'Standart Birim Fiyat' } ]
+  UnitPrice;
+
+  @UI.hidden: true
+  Currency;
+
+  @UI.fieldGroup: [ { qualifier: 'FG_Stock', position: 30, label: 'Oluşturan Kullanıcı' } ]
+  CreatedBy;
+
+  @UI.fieldGroup: [ { qualifier: 'FG_Stock', position: 40, label: 'Oluşturulma Zamanı' } ]
+  CreatedAt;
+}

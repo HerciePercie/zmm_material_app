@@ -1,0 +1,63 @@
+managed implementation in class zbp_i_mm_material unique;
+strict ( 2 );
+
+define behavior for ZI_MM_MATERIAL alias Material
+persistent table zmm_mat_master
+lock master
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  association _StockMovements { create; }
+
+  action addStock parameter ZD_MM_INCREASE_STOCK_PARAM result [1] $self;
+  action postGoodsMovement parameter ZD_MM_POST_MOVEMENT_PARAM result [1] $self;
+
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt;
+  field ( mandatory : create ) MatId, MatDesc, BaseUnit;
+
+  mapping for zmm_mat_master
+  {
+    MatId              = mat_id;
+    MatDesc            = mat_desc;
+    MatType            = mat_type;
+    BaseUnit           = base_unit;
+    StockQty           = stock_qty;
+    UnitPrice          = unit_price;
+    Currency           = currency;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
+
+define behavior for ZI_MM_STOCK_MOV alias StockMovement
+persistent table zmm_stock_mov
+lock dependent by _Material
+authorization dependent by _Material
+{
+  update;
+  delete;
+
+  field ( readonly ) MatId, CreatedBy, CreatedAt;
+  field ( mandatory : create ) MovId, MovType, Quantity, Unit;
+
+  association _Material;
+
+  mapping for zmm_stock_mov
+  {
+    MovId     = mov_id;
+    MatId     = mat_id;
+    MovType   = mov_type;
+    Quantity  = quantity;
+    Unit      = unit;
+    DocRef    = doc_ref;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+  }
+}

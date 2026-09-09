@@ -1,0 +1,7 @@
+CLASS zpal_bp_bom_head DEFINITION
+  PUBLIC ABSTRACT FINAL
+  FOR BEHAVIOR OF zpal_i_bom_head.
+ENDCLASS.
+
+CLASS zpal_bp_bom_head IMPLEMENTATION.
+ENDCLASS.

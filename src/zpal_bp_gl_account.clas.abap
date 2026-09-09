@@ -1,0 +1,7 @@
+CLASS zpal_bp_gl_account DEFINITION
+  PUBLIC ABSTRACT FINAL
+  FOR BEHAVIOR OF zpal_i_gl_account.
+ENDCLASS.
+
+CLASS zpal_bp_gl_account IMPLEMENTATION.
+ENDCLASS.

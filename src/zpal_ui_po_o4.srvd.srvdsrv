@@ -1,0 +1,5 @@
+@EndUserText.label: 'Satin Alma Siparis OData V4 Servisi'
+define service ZPAL_UI_PO_O4 {
+  expose ZPAL_C_PO_HEAD as PurchaseOrder;
+  expose ZPAL_C_PO_ITEM as PurchaseOrderItem;
+}

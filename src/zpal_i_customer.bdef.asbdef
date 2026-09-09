@@ -1,0 +1,44 @@
+managed implementation in class zpal_bp_customer unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZPAL_I_CUSTOMER alias Customer
+persistent table zpal_customer
+draft table zpal_customer_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt;
+  field ( mandatory : create ) CustomerId, Name;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpal_customer
+  {
+    CustomerId         = customer_id;
+    Name               = name;
+    TaxNumber          = tax_number;
+    CustomerGroup      = customer_group;
+    Email              = email;
+    Phone              = phone;
+    Street             = street;
+    City               = city;
+    PostalCode         = postal_code;
+    Country            = country;
+    OrderBlock         = order_block;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

@@ -1,0 +1,4 @@
+@EndUserText.label: 'Hesap Plani OData V4 Servisi'
+define service ZPAL_UI_GL_ACCOUNT_O4 {
+  expose ZPAL_C_GL_ACCOUNT as GlAccount;
+}

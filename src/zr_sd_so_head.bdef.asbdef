@@ -1,0 +1,83 @@
+managed implementation in class zbp_r_sd_so_head unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_SD_SO_HEAD alias SalesOrder
+persistent table ztsd_so_head
+draft table ztsd_so_head_d
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  association _Items { create; with draft; }
+  association _Customer;
+
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt, TotalAmount;
+  field ( mandatory : create ) CustomerId;
+
+  action approveOrder result [1] $self;
+  action shipOrder parameter ZD_SD_SHIP_PARAM result [1] $self;
+  action cancelOrder result [1] $self;
+
+  determination calculateTotalAmount on save { create; }
+
+  validation validateApproval on save { field OrderStatus; }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ztsd_so_head
+  {
+    SalesOrderId       = sales_order_id;
+    CustomerId         = customer_id;
+    CustomerName       = customer_name;
+    OrderDate          = order_date;
+    TotalAmount        = total_amount;
+    CurrencyCode       = currency_code;
+    OrderStatus        = order_status;
+    ShippingCarrier    = shipping_carrier;
+    TrackingNumber     = tracking_number;
+    DeliveryAddress    = delivery_address;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
+
+define behavior for ZR_SD_SO_ITEM alias OrderItem
+persistent table ztsd_so_item
+draft table ztsd_so_item_d
+lock dependent by _Header
+authorization dependent by _Header
+{
+  update;
+  delete;
+
+  field ( readonly ) SalesOrderId, NetAmount;
+
+  association _Header;
+  association _Material;
+
+  determination calculateNetAmount on modify { create; field Quantity, UnitPrice; }
+
+  mapping for ztsd_so_item
+  {
+    SalesOrderId = sales_order_id;
+    ItemPos      = item_pos;
+    MatId        = mat_id;
+    Quantity     = quantity;
+    Unit         = unit;
+    UnitPrice    = unit_price;
+    NetAmount    = net_amount;
+    CurrencyCode = currency_code;
+  }
+}

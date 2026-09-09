@@ -1,0 +1,5 @@
+@EndUserText.label: 'Malzeme Yonetimi OData V4 Servisi'
+define service ZUI_MM_MATERIAL_O4 {
+  expose ZC_MM_MATERIAL  as Material;
+  expose ZC_MM_STOCK_MOV as StockMovement;
+}

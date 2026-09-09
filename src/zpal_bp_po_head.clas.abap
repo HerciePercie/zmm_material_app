@@ -1,0 +1,7 @@
+CLASS zpal_bp_po_head DEFINITION
+  PUBLIC ABSTRACT FINAL
+  FOR BEHAVIOR OF zpal_i_po_head.
+ENDCLASS.
+
+CLASS zpal_bp_po_head IMPLEMENTATION.
+ENDCLASS.

@@ -1,0 +1,63 @@
+managed implementation in class zpal_bp_bom_head unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZPAL_I_BOM_HEAD alias BillOfMaterial
+persistent table zpal_bom_head
+draft table zpal_bom_head_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  association _Items { create; with draft; }
+
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt;
+  field ( mandatory : create ) BomId, ProductMat;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpal_bom_head
+  {
+    BomId              = bom_id;
+    ProductMat         = product_mat;
+    BaseQty            = base_qty;
+    BaseUnit           = base_unit;
+    HeaderText         = header_text;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
+
+define behavior for ZPAL_I_BOM_ITEM alias BillOfMaterialItem
+persistent table zpal_bom_item
+draft table zpal_bom_item_d
+lock dependent by _Header
+authorization dependent by _Header
+{
+  update;
+  delete;
+
+  field ( readonly ) BomId;
+
+  association _Header;
+
+  mapping for zpal_bom_item
+  {
+    BomId        = bom_id;
+    ItemPos      = item_pos;
+    ComponentMat = component_mat;
+    Quantity     = quantity;
+    Unit         = unit;
+  }
+}

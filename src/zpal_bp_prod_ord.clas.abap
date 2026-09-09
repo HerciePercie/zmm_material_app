@@ -1,0 +1,7 @@
+CLASS zpal_bp_prod_ord DEFINITION
+  PUBLIC ABSTRACT FINAL
+  FOR BEHAVIOR OF zpal_i_prod_ord.
+ENDCLASS.
+
+CLASS zpal_bp_prod_ord IMPLEMENTATION.
+ENDCLASS.

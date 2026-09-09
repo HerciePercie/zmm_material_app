@@ -1,0 +1,32 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZPAL_C_PO_HEAD alias PurchaseOrder
+{
+  use create;
+  use update;
+  use delete;
+
+  use action approvePO;
+  use action receiveGoods;
+  use action cancelPO;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _Items { create; with draft; }
+  use association _Vendor;
+}
+
+define behavior for ZPAL_C_PO_ITEM alias PurchaseOrderItem
+{
+  use update;
+  use delete;
+
+  use association _Header;
+  use association _Material;
+}
