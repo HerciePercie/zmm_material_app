@@ -7,16 +7,16 @@ sap.ui.define([
     return Controller.extend("pala.erp.zmmmaterialapp.controller.Home", {
         
         onInit: function () {
-            // Ana sayfa yüklendi
+           
         },
 
-        // MM Modülüne Tıklanınca Malzeme Listesine Git
+        
         onNavToMM: function () {
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("MaterialList");
         },
 
-        // Diğer Modüllere Tıklanınca Uyarı Ver
+        
         onDisabledModule: function (oEvent) {
             var sTitle = oEvent.getSource().getHeader();
             MessageBox.information(
